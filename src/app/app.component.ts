@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { QuartoInterface } from './interfaces/Quarto/Quarto.interface';
+import { HotelService } from './services/hotel.service';
+import { ClienteNormal } from './models/Cliente/ClienteNormal';
+import { ClienteVip } from './models/Cliente/ClienteVip';
+import { QuartoSimples } from './models/Quarto/QuartoSimples';
+import { QuartoLuxo } from './models/Quarto/QuartoLuxo';
+import { Reserva } from './models/Reserva/Reserva';
 
 @Component({
   selector: 'app-root',
@@ -13,14 +19,39 @@ export class AppComponent implements OnInit {
   tipoQuarto: string = '';
   quantidadeDias!: number;
 
+  constructor(public hotelService: HotelService) {}
+
+  criarCliente(): void {
+    if (this.tipoCliente === 'normal') {
+      this.cliente = new ClienteNormal(this.cliente.nome, 'Normal');
+      this.tipoQuarto = 'simples';
+    } else if (this.tipoCliente === 'vip') {
+      this.cliente = new ClienteVip(this.cliente.nome, 'VIP');
+      this.tipoQuarto = 'luxo';
+    }
+
+    this.hotelService.setCliente(this.cliente);
+    this.escolherQuarto();
+  }
+
   ngOnInit(): void {}
 
+  escolherQuarto(): void {
+    if (this.tipoQuarto === 'simples') {
+      this.quarto = new QuartoSimples();
+    } else if (this.tipoQuarto === 'luxo') {
+      this.quarto = new QuartoLuxo();
+    }
+
+    this.hotelService.setQuarto(this.quarto);
+  }
+
   fazerReserva(): void {
-    console.log(
-      this.cliente.nome,
-      this.tipoCliente,
-      this.tipoQuarto,
-      this.quantidadeDias
-    );
+    this.criarCliente();
+    let cliente = this.hotelService.getCliente();
+    let quarto = this.hotelService.getQuarto();
+    let reserva = new Reserva(cliente, quarto, this.quantidadeDias);
+    this.hotelService.addReserva(reserva);
+    console.log(this.hotelService.getReservas());
   }
 }
