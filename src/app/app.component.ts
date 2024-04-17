@@ -52,6 +52,5 @@ export class AppComponent implements OnInit {
     let quarto = this.hotelService.getQuarto();
     let reserva = new Reserva(cliente, quarto, this.quantidadeDias);
     this.hotelService.addReserva(reserva);
-    console.log(this.hotelService.getReservas());
   }
 }

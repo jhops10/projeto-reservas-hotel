@@ -53,12 +53,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>asdasd</td>
-          <td>asdasd</td>
-          <td>asdasd</td>
-          <td>asdasd</td>
-          <td>R$ 222</td>
+        <tr *ngFor="let reserva of hotelService.getReservas()">
+          <td>{{ reserva.cliente.nome }}</td>
+          <td>{{ reserva.cliente.tipo }}</td>
+          <td>{{ reserva.quarto.tipo }}</td>
+          <td>{{ reserva.quantidadeDias }}</td>
+          <td>R$ {{ reserva.valorTotal() }}</td>
         </tr>
       </tbody>
     </table>
