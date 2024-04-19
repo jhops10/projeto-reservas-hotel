@@ -1,8 +1,18 @@
-# Projeto Reservas de Hotel
+# Projeto Reservas de Hotel - POO
+
+
+![](https://i.ibb.co/MCVt439/imagem-hotel.png)
+
+
+## Descrição
 Estudo voltado para a aplicação dos pilares da Programação Orientada a Objetos (POO).
 
+## Tecnologias Utilizadas
+ * Angular
+ * TypeScript
+ * Bootstrap
 
 
-![](https://i.ibb.co/F40Fqd6/imagem1.jpg)
-
-
+## Como Rodar
+* Clone o Repositório
+* Use o comando __'ng serve'__
