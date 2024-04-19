@@ -1,3 +1,4 @@
+import { ClienteInterface } from './interfaces/Cliente/Cliente.interface';
 import { Component, OnInit } from '@angular/core';
 import { QuartoInterface } from './interfaces/Quarto/Quarto.interface';
 import { HotelService } from './services/hotel.service';
@@ -13,7 +14,8 @@ import { Reserva } from './models/Reserva/Reserva';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  cliente = { nome: '' };
+  clienteInput = { nome: '' };
+  cliente!: ClienteInterface;
   tipoCliente: string = 'normal';
   quarto!: QuartoInterface;
   tipoQuarto: string = '';
@@ -23,10 +25,10 @@ export class AppComponent implements OnInit {
 
   criarCliente(): void {
     if (this.tipoCliente === 'normal') {
-      this.cliente = new ClienteNormal(this.cliente.nome, 'Normal');
+      this.cliente = new ClienteNormal(this.clienteInput.nome, 'Normal');
       this.tipoQuarto = 'simples';
     } else if (this.tipoCliente === 'vip') {
-      this.cliente = new ClienteVip(this.cliente.nome, 'VIP');
+      this.cliente = new ClienteVip(this.clienteInput.nome, 'VIP');
       this.tipoQuarto = 'luxo';
     }
 
@@ -52,5 +54,7 @@ export class AppComponent implements OnInit {
     let quarto = this.hotelService.getQuarto();
     let reserva = new Reserva(cliente, quarto, this.quantidadeDias);
     this.hotelService.addReserva(reserva);
+    this.clienteInput.nome = '';
+    this.quantidadeDias = 1;
   }
 }
